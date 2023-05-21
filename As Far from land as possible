@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<pair<int, int>> land;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    land.push_back({i, j});
+                }
+            }
+        }
+        if (land.empty() || land.size() == n * n) {
+            return -1;
+        }
+        int max_distance = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    int min_distance = INT_MAX;
+                    for (auto l : land) {
+                        int x = l.first, y = l.second;
+                        int distance = abs(x - i) + abs(y - j);
+                        min_distance = min(min_distance, distance);
+                    }
+                    max_distance = max(max_distance, min_distance);
+                }
+            }
+        }
+        return max_distance;
+    }
+
+};
