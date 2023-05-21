@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minFlipsMonoIncr(string s) {
+        int n = s.size();
+        int cnt = 0;
+        //cnt - store the count of '0' in string
+        for(auto x:s)
+        {
+            if(x == '0')
+                cnt++;
+        }
+        //Initialize res with n-cnt i.e. make the string with all values '0'
+        int res = n-cnt;
+        //store count of '1'
+        int cntOne = 0;
+        for(int i=0;i<n;i++){
+            //cntOne - count of '1' before index i that are needed to be '0'
+            //cnt - count of '0' from index i to n-1
+            res = min(res,cnt+cntOne);
+            if(s[i] == '0')
+                cnt--;
+            else
+                cntOne++;
+        }
+        
+        return res;
+    }
+};
