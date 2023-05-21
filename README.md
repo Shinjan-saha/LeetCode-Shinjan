@@ -6,3 +6,5 @@
  </div>  
  
 ## Solutions of the Leetcode problems I have solved ->
+### Array,String,List & Linked List Were done Completely by me any similarity with other user are concidence 
+### Tree & some extent nodes were done with help of internet 
