@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& arr) {
+        int n = arr.size(); // extract size
+        
+        // if size is n = 1 and n = 2, then simply return n
+        if(n == 1 || n == 2)
+        {
+            return n;
+        }
+        
+        int k = 2; // now we have only two basket, so define k = 2
+        
+        int i = 0, j = 0; // declaring i and j pointers to move
+        
+        // mx variable to find answer
+        int mx = INT_MIN;
+        
+        // declaring unordered map
+        unordered_map<int, int> mp;
+        
+        // start moving
+        while(j < n)
+        {
+            // add frequency to map
+            mp[arr[j]]++;
+            
+            // if map size is less than k, move forward
+            if(mp.size() < k)
+            {
+                j++;
+            }
+            else if(mp.size() == k) // if size becomes equal to k, then extract max
+            {
+                mx = max(mx, j - i + 1);
+                j++;
+            }
+            else if(mp.size() > k) // else if size becomes greater than k
+            {
+                // while size is greater than k
+                while(mp.size() > k)
+                {
+                    mp[arr[i]]--; // decrease freq
+                    
+                    // if frequency of any element becomes zero, erase it
+                    if(mp[arr[i]] == 0)
+                    {
+                        mp.erase(arr[i]);
+                        
+                    }
+                    i++; // move i
+                }
+                j++; // and now move j
+            }
+        }
+        
+        // if our mx is still INT_MIN, that means we 
+        // can pick all elements, so return n
+        if(mx == INT_MIN)
+        {
+            return n;
+        }
+        
+        return mx; // else, return mx
+    }
+};
