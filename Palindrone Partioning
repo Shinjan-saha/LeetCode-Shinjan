@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> res;
+        vector<string> partition;
+        backtrack(s, partition, res);
+        return res;
+    }
+
+private:
+    void backtrack(string s, vector<string>& partition, vector<vector<string>>& res) {
+        if (s.empty()) {
+            res.push_back(partition);
+            return;
+        }
+        for (int i = 1; i <= s.length(); i++) {
+            string substring = s.substr(0, i);
+            if (isPalindrome(substring)) {
+                partition.push_back(substring);
+                backtrack(s.substr(i), partition, res);
+                partition.pop_back();
+            }
+        }
+    }
+    
+    bool isPalindrome(string s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s[left++] != s[right--]) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
