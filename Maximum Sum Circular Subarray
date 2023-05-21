@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& arr) {
+        int n = arr.size(); // extract size
+        
+        // declaring variables
+        int maximum_straight_sum = INT_MIN;
+        int max_temp_sum = 0;
+        
+        int minimum_straight_sum = INT_MAX;
+        int min_temp_sum = 0;
+        
+        // variable that contain total sum
+        int total_sum = 0;
+        
+        // traverse the array
+        for(int i = 0; i < n; i++)
+        {
+            // update max and min tempsum
+            max_temp_sum = max_temp_sum + arr[i];
+            min_temp_sum = min_temp_sum + arr[i];
+            
+            // if temp sum is greater than max straight sum, update it
+            if(max_temp_sum > maximum_straight_sum)
+            {
+                maximum_straight_sum = max_temp_sum;
+            }
+            
+            // if it becomes zero at any moment, reintiliaze it to zero
+            if(max_temp_sum < 0)
+            {
+                max_temp_sum = 0;
+            }
+            
+            // if temp sum is less than min straight sum, update it
+            if(min_temp_sum < minimum_straight_sum)
+            {
+                minimum_straight_sum = min_temp_sum;
+            }
+            
+            // if it becomes greater than zero at any moment, update it
+            if(min_temp_sum > 0)
+            {
+                min_temp_sum = 0;
+            }
+            
+            // add element to our total_sum
+            total_sum = total_sum + arr[i];
+        }
+        
+        // all elements are -ve
+        if(total_sum == minimum_straight_sum) 
+            return maximum_straight_sum;
+        
+        // else return max of two conditons we discussed
+        return max(maximum_straight_sum, (total_sum - minimum_straight_sum));
+    }
+};
