@@ -1,0 +1,48 @@
+class Solution {
+public:
+    long long distinctNames(vector<string>& ideas) {
+        int n = ideas.size();
+        
+        unordered_map<string, bool> mp;
+        for(int i = 0; i < n; i++) mp[ideas[i]] = true;
+        
+        int count[26][26] = {0};
+        
+        for(int i = 0; i < n; i++)
+        {
+            string originalWord = ideas[i];  // coffee
+            
+            string word = originalWord.substr(1);  // offee
+            
+            int firstLetter = originalWord[0] - 'a';
+            
+            // now i will try every possibility replacing first characters
+            for(int j = 0; j < 26; j++)
+            {
+                char c = j + 'a';
+                
+                string newWord = c + word; 
+                
+                if(mp.find(newWord) == mp.end()) // agr map main nhi hai
+                {
+                    count[firstLetter][j] += 1;
+                }
+            }
+        }
+        
+        long long ans = 0;
+        // traverse in counts
+        for(int i = 0; i < 26; i++)
+        {
+            for(int j = 0; j < 26; j++)
+            {
+                if(i == j) continue; // same character
+                
+                ans += (long long)(count[i][j]  * count[j][i]);
+            }
+        }
+        
+        
+        return ans;
+    }
+};
